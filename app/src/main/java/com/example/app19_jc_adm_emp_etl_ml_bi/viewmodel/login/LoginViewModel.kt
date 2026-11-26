@@ -7,12 +7,12 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.app19_jc_adm_emp_etl_ml_bi.App19Application
 import com.example.app19_jc_adm_emp_etl_ml_bi.model.repository.AuthRepository
+import com.example.app19_jc_adm_emp_etl_ml_bi.viewmodel.mensajeDeError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
@@ -24,6 +24,7 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun alternarMostrarPassword() =
         _uiState.update { it.copy(mostrarPassword = !it.mostrarPassword) }
+
     fun ingresar() {
         val estado = _uiState.value
         if (estado.correo.isBlank() || estado.password.isBlank()) {
@@ -39,11 +40,8 @@ class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
                     _uiState.update { it.copy(cargando = false, rolIngresado = rol) }
                 }
                 .onFailure { e ->
-                    val mensaje = if (e is HttpException && e.code() == 401)
-                        "Correo o contraseña incorrectos"
-                    else
-                        "No se pudo conectar con la API"
-                    _uiState.update { it.copy(cargando = false, error = mensaje) }
+                    // La API manda el motivo: "Correo o contraseña incorrectos", "Usuario desactivado"...
+                    _uiState.update { it.copy(cargando = false, error = mensajeDeError(e)) }
                 }
         }
     }

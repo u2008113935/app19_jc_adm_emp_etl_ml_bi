@@ -24,7 +24,8 @@ android {
         // URL de la API Delicia (10.0.2.2 = tu PC vista desde el emulador)
         // buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8000/\"")
         //buildConfigField("String", "BASE_URL", "\"http://192.168.1.50:8000/\"")
-        buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8000/\"")
+        //buildConfigField("String", "BASE_URL", "\"http://127.0.0.1:8000/\"")
+        buildConfigField("String", name = "BASE_URL", value = "\"https://api-delicia-node.onrender.com/\"" )
     }
 
     buildTypes {
@@ -76,6 +77,10 @@ dependencies {
 
     // MODEL: sincronización offline
     implementation(libs.androidx.work.runtime.ktx)
+
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.core)   // íconos de la barra inferior
+    implementation(libs.zxing.core)                             // dibuja el QR de Banco Andino
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

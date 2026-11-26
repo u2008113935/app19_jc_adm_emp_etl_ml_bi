@@ -16,6 +16,8 @@ retrofit = "3.0.0"
 okhttp = "4.12.0"
 datastore = "1.2.1"
 workManager = "2.11.2"
+# en [versions]
+zxing = "3.5.3"
 
 
 [libraries]
@@ -54,6 +56,11 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 # ── MODEL: sincronización ──
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
 
+# en [libraries]
+# Íconos de Material (Icons.Filled.*), versión según el BOM
+androidx-compose-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+# QR del cobro Banco Andino
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

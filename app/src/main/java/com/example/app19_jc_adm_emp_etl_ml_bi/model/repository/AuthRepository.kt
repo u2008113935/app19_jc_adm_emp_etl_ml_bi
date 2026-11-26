@@ -17,8 +17,11 @@ class AuthRepository(
     // Login correcto → guarda token, rol y nombre en DataStore
     suspend fun login(correo: String, password: String): Result<Rol> = runCatching {
         val respuesta = api.login(LoginRequest(correo, password))
-        session.guardarSesion(respuesta.token, respuesta.rol, respuesta.nombre)
-        respuesta.rol
+        // Un CLIENTE no existe en el enum Rol: Gson lo deja en null → no entra a esta app
+        val rol: Rol = (respuesta.rol as Rol?)
+            ?: throw IllegalStateException("Esta app es solo para el personal de Delicia")
+        session.guardarSesion(respuesta.token, rol, respuesta.nombre)
+        rol
     }
 
     suspend fun cerrarSesion() = session.cerrarSesion()

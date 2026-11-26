@@ -13,4 +13,8 @@ class PagoRepository(private val api: ApiService) {
 
     suspend fun consultarPago(pagoId: String): Result<PagoEstadoDto> =
         runCatching { api.consultarPago(pagoId) }
+
+    // Demo en clase: la API hace de banco y confirma
+    suspend fun simularConfirmacion(pagoId: String): Result<PagoEstadoDto> =
+        runCatching { api.simularPago(pagoId, mapOf("resultado" to "CONFIRMADO")) }
 }

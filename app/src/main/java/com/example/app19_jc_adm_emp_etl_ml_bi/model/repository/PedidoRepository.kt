@@ -5,6 +5,7 @@ import com.example.app19_jc_adm_emp_etl_ml_bi.model.local.dao.PedidoDao
 import com.example.app19_jc_adm_emp_etl_ml_bi.model.local.entity.PedidoEntity
 import com.example.app19_jc_adm_emp_etl_ml_bi.model.remote.ApiService
 import com.example.app19_jc_adm_emp_etl_ml_bi.model.remote.dto.CambioEstadoPedidoRequest
+import com.example.app19_jc_adm_emp_etl_ml_bi.model.remote.dto.PedidoDetalleDto
 import com.example.app19_jc_adm_emp_etl_ml_bi.model.remote.dto.PedidoDto
 import kotlinx.coroutines.flow.Flow
 
@@ -22,6 +23,11 @@ class PedidoRepository(
     suspend fun refrescar(): Result<Unit> = runCatching {
         val pedidos = api.obtenerPedidos()
         dao.guardarTodos(pedidos.map { it.toEntity() })
+    }
+
+    // El detalle (productos, historial, pagos) se pide en línea a la API
+    suspend fun obtenerDetalle(id: String): Result<PedidoDetalleDto> = runCatching {
+        api.obtenerPedido(id)
     }
 
     // Cambiar estado requiere señal: la API valida si la transición es permitida

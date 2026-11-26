@@ -9,7 +9,7 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-// Contrato con la API Delicia: una función = una ruta
+// Contrato con la API Delicia (api_delicia_node): una función = una ruta
 interface ApiService {
 
     // ── Autenticación ──
@@ -26,12 +26,15 @@ interface ApiService {
     @PUT("api/productos/{id}")
     suspend fun actualizarProducto(@Path("id") id: Int, @Body request: ProductoRequest): ProductoDto
 
-    // ── Pedidos (WhatsApp y mostrador) ──
+    // ── Pedidos (WhatsApp, mostrador, web y app cliente) ──
     @GET("api/pedidos")
     suspend fun obtenerPedidos(
         @Query("estado") estado: String? = null,       // null = todos
         @Query("canal") canal: String? = null
     ): List<PedidoDto>
+
+    @GET("api/pedidos/{id}")
+    suspend fun obtenerPedido(@Path("id") id: String): PedidoDetalleDto
 
     @PATCH("api/pedidos/{id}/estado")
     suspend fun cambiarEstadoPedido(@Path("id") id: String, @Body request: CambioEstadoPedidoRequest): PedidoDto
@@ -42,6 +45,10 @@ interface ApiService {
 
     @GET("api/pagos/{id}")
     suspend fun consultarPago(@Path("id") pagoId: String): PagoEstadoDto
+
+    // Solo para la demo en clase: hace de "banco" y confirma el pago
+    @POST("api/pagos/{id}/simular")
+    suspend fun simularPago(@Path("id") pagoId: String, @Body body: Map<String, String>): PagoEstadoDto
 
     // ── Producción (Empleado) ──
     @GET("api/produccion/ordenes")

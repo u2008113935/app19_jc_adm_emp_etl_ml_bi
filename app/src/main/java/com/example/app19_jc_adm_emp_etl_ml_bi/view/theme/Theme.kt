@@ -11,32 +11,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = RosaClaro,
+    secondary = ChocolateClaro,
+    tertiary = RosaClaro,
+    background = Cacao,
+    surface = Cacao
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = Chocolate,
+    secondary = Rosa,
+    tertiary = Rosa,
+    background = Crema,
+    surface = Crema
 )
 
 @Composable
 fun App19_jc_adm_emp_etl_ml_biTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,          // false = siempre los colores de Delicia
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
